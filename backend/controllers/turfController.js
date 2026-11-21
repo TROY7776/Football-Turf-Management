@@ -145,7 +145,7 @@ async function deleteTurf(req, res) {
 
     // Safe check: do not allow deletion if there are active confirmed future bookings
     const activeBookings = await db.query(
-      'SELECT COUNT(*) as count FROM BOOKING WHERE turf_id = ? AND status = "CONFIRMED" AND booking_date >= CURDATE()',
+      "SELECT COUNT(*) as count FROM BOOKING WHERE turf_id = ? AND status = 'CONFIRMED' AND booking_date >= date('now', 'localtime')",
       [turfId]
     );
 
@@ -160,7 +160,7 @@ async function deleteTurf(req, res) {
     // First remove cancelled/completed bookings if foreign key requires it
     await db.withTransaction(async (conn) => {
       // Find historical booking IDs
-      const [bookings] = await conn.query('SELECT booking_id FROM BOOKING WHERE turf_id = ?', [turfId]);
+      const bookings = await conn.query('SELECT booking_id FROM BOOKING WHERE turf_id = ?', [turfId]);
       for (const b of bookings) {
         await conn.query('DELETE FROM PAYMENT WHERE booking_id = ?', [b.booking_id]);
       }

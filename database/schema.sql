@@ -1,65 +1,64 @@
 -- ====================================================================
--- Football Turf Management System - Database Schema
--- Database: football_turf_management
--- Designed for College DBMS Mini-Project
+-- Football Turf Management System - SQLite Database Schema
+-- Database File: database/turf.db
+-- Designed for College DBMS Mini-Project (SQLite / Zero-Setup Serverless)
 -- ====================================================================
 
--- 1. Create Database if not exists
-CREATE DATABASE IF NOT EXISTS football_turf_management;
-USE football_turf_management;
+-- Enable Foreign Key Constraint Enforcement
+PRAGMA foreign_keys = ON;
 
--- 2. Drop tables in reverse order of foreign key dependency if re-running
+-- 1. Drop existing tables if recreating
 DROP TABLE IF EXISTS PAYMENT;
 DROP TABLE IF EXISTS BOOKING;
 DROP TABLE IF EXISTS TURF;
 DROP TABLE IF EXISTS MANAGER;
 DROP TABLE IF EXISTS CUSTOMER;
 
--- 3. CUSTOMER Table
+-- 2. CUSTOMER Table
 -- Represents registered customer users who can browse and book turfs
 CREATE TABLE CUSTOMER (
-    customer_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    phone VARCHAR(20) NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    customer_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    phone TEXT NOT NULL,
+    password_hash TEXT NOT NULL,
+    created_at DATETIME DEFAULT (datetime('now', 'localtime'))
+);
 
--- 4. MANAGER Table
+-- 3. MANAGER Table
 -- Represents administrative users managing turfs, bookings, and records
 CREATE TABLE MANAGER (
-    manager_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password_hash VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    manager_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    created_at DATETIME DEFAULT (datetime('now', 'localtime'))
+);
 
--- 5. TURF Table
+-- 4. TURF Table
 -- Represents football turf facilities available for booking
 CREATE TABLE TURF (
-    turf_id INT AUTO_INCREMENT PRIMARY KEY,
-    turf_name VARCHAR(100) NOT NULL,
-    location VARCHAR(150) NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
+    turf_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    turf_name TEXT NOT NULL,
+    location TEXT NOT NULL,
+    price REAL NOT NULL,
     description TEXT,
-    image_url VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    image_url TEXT,
+    created_at DATETIME DEFAULT (datetime('now', 'localtime'))
+);
 
--- 6. BOOKING Table
+-- 5. BOOKING Table
 -- Represents a reservation made by a customer for a specific turf and time slot
 CREATE TABLE BOOKING (
-    booking_id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT NOT NULL,
-    turf_id INT NOT NULL,
-    booking_date DATE NOT NULL,
-    booking_time TIME NOT NULL,
-    duration INT NOT NULL DEFAULT 1,
-    status ENUM('CONFIRMED', 'CANCELLED', 'COMPLETED', 'PENDING') NOT NULL DEFAULT 'CONFIRMED',
-    total_amount DECIMAL(10, 2) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    booking_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    customer_id INTEGER NOT NULL,
+    turf_id INTEGER NOT NULL,
+    booking_date TEXT NOT NULL,
+    booking_time TEXT NOT NULL,
+    duration INTEGER NOT NULL DEFAULT 1,
+    status TEXT NOT NULL DEFAULT 'CONFIRMED' CHECK (status IN ('CONFIRMED', 'CANCELLED', 'COMPLETED', 'PENDING')),
+    total_amount REAL NOT NULL,
+    created_at DATETIME DEFAULT (datetime('now', 'localtime')),
     CONSTRAINT fk_booking_customer FOREIGN KEY (customer_id) 
         REFERENCES CUSTOMER (customer_id) 
         ON DELETE CASCADE 
@@ -68,22 +67,22 @@ CREATE TABLE BOOKING (
         REFERENCES TURF (turf_id) 
         ON DELETE RESTRICT 
         ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
 
--- Indexes for fast lookup and overlap checking
-CREATE INDEX idx_booking_turf_date ON BOOKING (turf_id, booking_date, status);
-CREATE INDEX idx_booking_customer ON BOOKING (customer_id);
+-- Indexes for fast lookup and concurrency slot overlap validation
+CREATE INDEX IF NOT EXISTS idx_booking_turf_date ON BOOKING (turf_id, booking_date, status);
+CREATE INDEX IF NOT EXISTS idx_booking_customer ON BOOKING (customer_id);
 
--- 7. PAYMENT Table
+-- 6. PAYMENT Table
 -- Represents payment transaction associated with each booking
 CREATE TABLE PAYMENT (
-    payment_id INT AUTO_INCREMENT PRIMARY KEY,
-    booking_id INT NOT NULL UNIQUE,
-    amount DECIMAL(10, 2) NOT NULL,
-    payment_status ENUM('PAID', 'PENDING', 'REFUNDED') NOT NULL DEFAULT 'PAID',
-    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    payment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    booking_id INTEGER NOT NULL UNIQUE,
+    amount REAL NOT NULL,
+    payment_status TEXT NOT NULL DEFAULT 'PAID' CHECK (payment_status IN ('PAID', 'PENDING', 'REFUNDED')),
+    payment_date DATETIME DEFAULT (datetime('now', 'localtime')),
     CONSTRAINT fk_payment_booking FOREIGN KEY (booking_id) 
         REFERENCES BOOKING (booking_id) 
         ON DELETE CASCADE 
         ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);

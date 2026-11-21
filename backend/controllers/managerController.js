@@ -19,13 +19,13 @@ async function getDashboardStats(req, res) {
 
     // 4. Total Revenue (from completed/paid payments)
     const revResult = await db.query(
-      'SELECT COALESCE(SUM(amount), 0) AS total_revenue FROM PAYMENT WHERE payment_status = "PAID"'
+      "SELECT COALESCE(SUM(amount), 0) AS total_revenue FROM PAYMENT WHERE payment_status = 'PAID'"
     );
     const totalRevenue = parseFloat(revResult[0].total_revenue) || 0;
 
     // 5. Today's Bookings
     const todayResult = await db.query(
-      'SELECT COUNT(*) AS today_bookings FROM BOOKING WHERE booking_date = CURDATE() AND status != "CANCELLED"'
+      "SELECT COUNT(*) AS today_bookings FROM BOOKING WHERE booking_date = date('now', 'localtime') AND status != 'CANCELLED'"
     );
     const todayBookings = todayResult[0].today_bookings;
 

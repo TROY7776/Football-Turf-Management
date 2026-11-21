@@ -69,7 +69,7 @@ async function inspectTable(tableName) {
   const tbody = document.getElementById('inspect-tbody');
   const schemaTbody = document.getElementById('schema-columns-tbody');
 
-  tbody.innerHTML = `<tr><td style="text-align:center; padding:30px;">Loading ${tableName} records from MySQL...</td></tr>`;
+  tbody.innerHTML = `<tr><td style="text-align:center; padding:30px;">Loading ${tableName} records from SQLite...</td></tr>`;
 
   try {
     const res = await API.get(`/api/dbms/table/${tableName}`);
@@ -133,14 +133,14 @@ async function runDemo(demoKey) {
 
   const thead = document.getElementById('demo-thead');
   const tbody = document.getElementById('demo-tbody');
-  tbody.innerHTML = `<tr><td style="text-align:center; padding:30px;">Executing MySQL Query...</td></tr>`;
+  tbody.innerHTML = `<tr><td style="text-align:center; padding:30px;">Executing SQLite Query...</td></tr>`;
 
   try {
     const res = await API.post('/api/dbms/demo', { demoKey });
     if (res.success) {
       document.getElementById('demo-concept-title').textContent = `Concept: ${res.concept}`;
       document.getElementById('demo-concept-explanation').textContent = res.explanation;
-      document.getElementById('demo-timing-badge').textContent = `MySQL Query Time: ${res.executionTimeMs} ms`;
+      document.getElementById('demo-timing-badge').textContent = `SQLite Query Time: ${res.executionTimeMs} ms`;
       document.getElementById('demo-sql-box').textContent = res.sqlQuery;
       document.getElementById('demo-rows-count').textContent = `${res.rowCount} record${res.rowCount === 1 ? '' : 's'} returned`;
 

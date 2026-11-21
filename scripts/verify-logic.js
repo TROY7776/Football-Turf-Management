@@ -1,14 +1,15 @@
 /**
  * Self-Contained Verification Suite
- * Tests core business rules, overlap algorithm, SQL parsing, and password hashing
+ * Tests core business rules, overlap algorithm, SQL parsing, password hashing, and live SQLite operations
  */
 
 const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcrypt');
+const Database = require('better-sqlite3');
 
 console.log('========================================================');
-console.log('🧪 RUNNING FOOTBALL TURF MANAGEMENT VERIFICATION TESTS');
+console.log('🧪 RUNNING FOOTBALL TURF MANAGEMENT VERIFICATION TESTS (SQLITE)');
 console.log('========================================================');
 
 let passed = 0;
@@ -35,23 +36,13 @@ function checkOverlap(reqStartH, reqDur, bookedStartH, bookedDur) {
   const bookedStart = bookedStartH * 60;
   const bookedEnd = (bookedStartH + bookedDur) * 60;
 
-  // S_req < E_booked AND E_req > S_booked
   return reqStart < bookedEnd && reqEnd > bookedStart;
 }
 
-// Case 1: Exact match overlap (18:00-19:00 vs 18:00-19:00)
 assert(checkOverlap(18, 1, 18, 1) === true, 'Exact same hour overlaps');
-
-// Case 2: Partial overlap inside 2-hour booking (Existing: 18:00-20:00, Request: 19:00-20:00)
 assert(checkOverlap(19, 1, 18, 2) === true, 'Sub-slot inside 2-hour window overlaps');
-
-// Case 3: Overlapping start (Existing: 18:00-20:00, Request: 17:00-19:00)
 assert(checkOverlap(17, 2, 18, 2) === true, 'Straddling start slot overlaps');
-
-// Case 4: Adjacent slots do NOT overlap (Existing: 18:00-19:00, Request: 19:00-20:00)
 assert(checkOverlap(19, 1, 18, 1) === false, 'Adjacent consecutive slots do NOT overlap');
-
-// Case 5: Completely non-overlapping slots (14:00-15:00 vs 18:00-19:00)
 assert(checkOverlap(14, 1, 18, 1) === false, 'Disjoint morning and evening slots do NOT overlap');
 
 
@@ -70,37 +61,87 @@ assert(bcrypt.compareSync('badpass', customerHash) === false, 'Incorrect custome
 
 
 // ----------------------------------------------------
-// Test 3: Database SQL Files Integrity Check
+// Test 3: Live SQLite Database Engine Verification
 // ----------------------------------------------------
-console.log('\n[Test Suite 3] Database Schema & Seed SQL Integrity:');
+console.log('\n[Test Suite 3] Live SQLite Engine & SQL Operations:');
+
+const testDb = new Database(':memory:');
+testDb.pragma('foreign_keys = ON');
 
 const schemaPath = path.join(__dirname, '..', 'database', 'schema.sql');
 const seedPath = path.join(__dirname, '..', 'database', 'seed.sql');
 
-assert(fs.existsSync(schemaPath), 'schema.sql exists in database/');
-assert(fs.existsSync(seedPath), 'seed.sql exists in database/');
-
 const schemaContent = fs.readFileSync(schemaPath, 'utf8');
 const seedContent = fs.readFileSync(seedPath, 'utf8');
 
-assert(schemaContent.includes('CREATE TABLE CUSTOMER'), 'schema.sql defines CUSTOMER entity');
-assert(schemaContent.includes('CREATE TABLE MANAGER'), 'schema.sql defines MANAGER entity');
-assert(schemaContent.includes('CREATE TABLE TURF'), 'schema.sql defines TURF entity');
-assert(schemaContent.includes('CREATE TABLE BOOKING'), 'schema.sql defines BOOKING entity');
-assert(schemaContent.includes('CREATE TABLE PAYMENT'), 'schema.sql defines PAYMENT entity');
-assert(schemaContent.includes('FOREIGN KEY (customer_id)'), 'schema.sql defines FK customer_id');
-assert(schemaContent.includes('FOREIGN KEY (turf_id)'), 'schema.sql defines FK turf_id');
-assert(schemaContent.includes('FOREIGN KEY (booking_id)'), 'schema.sql defines FK booking_id');
+testDb.exec(schemaContent);
+assert(true, 'schema.sql executed cleanly in SQLite');
 
-assert(seedContent.includes('INSERT INTO MANAGER'), 'seed.sql seeds sample managers');
-assert(seedContent.includes('INSERT INTO CUSTOMER'), 'seed.sql seeds sample customers');
-assert(seedContent.includes('INSERT INTO TURF'), 'seed.sql seeds sample turfs');
-assert(seedContent.includes('INSERT INTO BOOKING'), 'seed.sql seeds sample bookings');
-assert(seedContent.includes('INSERT INTO PAYMENT'), 'seed.sql seeds sample payments');
+testDb.exec(seedContent);
+assert(true, 'seed.sql executed cleanly in SQLite');
+
+// Query counts
+const custCount = testDb.prepare('SELECT COUNT(*) AS count FROM CUSTOMER').get();
+assert(custCount.count === 5, 'CUSTOMER table has 5 seeded records');
+
+const mgrCount = testDb.prepare('SELECT COUNT(*) AS count FROM MANAGER').get();
+assert(mgrCount.count === 2, 'MANAGER table has 2 seeded records');
+
+const turfCount = testDb.prepare('SELECT COUNT(*) AS count FROM TURF').get();
+assert(turfCount.count === 5, 'TURF table has 5 seeded records');
+
+const bookingCount = testDb.prepare('SELECT COUNT(*) AS count FROM BOOKING').get();
+assert(bookingCount.count === 8, 'BOOKING table has 8 seeded records');
+
+const paymentCount = testDb.prepare('SELECT COUNT(*) AS count FROM PAYMENT').get();
+assert(paymentCount.count === 8, 'PAYMENT table has 8 seeded records');
+
+// Test 3-Table INNER JOIN
+const joinResults = testDb.prepare(`
+  SELECT b.booking_id, c.name, t.turf_name, b.total_amount
+  FROM BOOKING b
+  INNER JOIN CUSTOMER c ON b.customer_id = c.customer_id
+  INNER JOIN TURF t ON b.turf_id = t.turf_id
+  ORDER BY b.booking_id ASC
+`).all();
+assert(joinResults.length === 8 && joinResults[0].turf_name === 'Champions Arena', '3-Table INNER JOIN executes and returns customer + turf data');
+
+// Test GROUP BY & Aggregates
+const groupResults = testDb.prepare(`
+  SELECT t.turf_name, COUNT(b.booking_id) as total_bookings, COALESCE(SUM(b.total_amount), 0) as rev
+  FROM TURF t
+  LEFT JOIN BOOKING b ON t.turf_id = b.turf_id
+  GROUP BY t.turf_id, t.turf_name
+`).all();
+assert(groupResults.length === 5, 'GROUP BY with COUNT and SUM executes across 5 turfs');
+
+// Test SQLite time overlap query
+const overlapTest = testDb.prepare(`
+  SELECT booking_id FROM BOOKING
+  WHERE turf_id = 1 AND booking_date = '2026-11-22' AND status != 'CANCELLED'
+  AND (
+    ? < time(booking_time, '+' || duration || ' hours')
+    AND time(?, '+' || ? || ' hours') > booking_time
+  )
+`).all('18:00:00', '18:00:00', 1);
+assert(overlapTest.length > 0, 'SQLite time overlap query correctly detects booked slot collision');
+
+// Test non-overlapping slot query
+const nonOverlapTest = testDb.prepare(`
+  SELECT booking_id FROM BOOKING
+  WHERE turf_id = 1 AND booking_date = '2026-11-22' AND status != 'CANCELLED'
+  AND (
+    ? < time(booking_time, '+' || duration || ' hours')
+    AND time(?, '+' || ? || ' hours') > booking_time
+  )
+`).all('10:00:00', '10:00:00', 1);
+assert(nonOverlapTest.length === 0, 'SQLite time overlap query returns 0 conflicts for unoccupied 10:00 AM slot');
+
+testDb.close();
 
 
 // ----------------------------------------------------
-// Test 4: Frontend Assets and HTML Pages Check
+// Test 4: Frontend Pages & Assets Check
 // ----------------------------------------------------
 console.log('\n[Test Suite 4] Frontend Pages & Assets Check:');
 
@@ -143,6 +184,6 @@ console.log('========================================================');
 if (failed > 0) {
   process.exit(1);
 } else {
-  console.log('🎉 All business logic, algorithms, and SQL schemas verified successfully!\n');
+  console.log('🎉 All business logic, SQLite operations, and assets verified successfully!\n');
   process.exit(0);
 }

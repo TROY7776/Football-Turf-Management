@@ -88,8 +88,9 @@ app.listen(PORT, async () => {
   console.log(`🌐 Website URL: http://localhost:${PORT}`);
   console.log('====================================================');
   
-  // Test MySQL connection
-  await db.testConnection();
+  const status = db.getStatus();
+  console.log(`📦 Database: ${status.engine} (${status.database})`);
+  console.log(`⚡ Zero-setup: Ready to run on any PC without external DB servers`);
 });
 
 module.exports = app;

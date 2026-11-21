@@ -124,20 +124,17 @@ async function initDatabaseStatusBanner() {
       banner.className = 'db-alert-banner connected';
       banner.innerHTML = `
         <div style="display:flex;align-items:center;gap:10px;">
-          <span class="badge">MySQL Connected</span>
-          <span>Database: <strong>${db.config.database}</strong> on <strong>${db.config.host}:${db.config.port}</strong> (Pool Active)</span>
+          <span class="badge" style="background:#15803d;color:#fff;">SQLite 3 Active</span>
+          <span>Database: <strong>${db.database || 'database/turf.db'}</strong> (Local Serverless File)</span>
         </div>
-        <div style="font-size:0.8rem;color:#15803d;">ACID Transactions & Overlap Protection Enabled</div>
+        <div style="font-size:0.8rem;color:#15803d;">⚡ Zero Configuration • Foreign Keys ON • ACID Transaction Locks Active</div>
       `;
     } else {
       banner.className = 'db-alert-banner';
       banner.innerHTML = `
         <div style="display:flex;align-items:center;gap:10px;">
-          <span class="badge">MySQL Disconnected</span>
-          <span>MySQL Server is not reachable at <strong>${db.config?.host || 'localhost'}:${db.config?.port || 3306}</strong>.</span>
-        </div>
-        <div>
-          <span>Please start your local MySQL service and run: <code style="background:rgba(0,0,0,0.06);padding:2px 6px;border-radius:4px;font-weight:700;">npm run db:init</code></span>
+          <span class="badge">Database Offline</span>
+          <span>SQLite database could not be loaded: ${db.error || 'Unknown error'}</span>
         </div>
       `;
     }

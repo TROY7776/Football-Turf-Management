@@ -1,24 +1,8 @@
 -- ====================================================================
--- Football Turf Management System - Sample Seed Data
--- Database: football_turf_management
+-- Football Turf Management System - SQLite Sample Seed Data
+-- Database File: database/turf.db
 -- Pre-loaded records for demonstration, testing, and presentation
 -- ====================================================================
-
-USE football_turf_management;
-
--- Clear any existing rows to avoid duplicate key errors
-DELETE FROM PAYMENT;
-DELETE FROM BOOKING;
-DELETE FROM TURF;
-DELETE FROM MANAGER;
-DELETE FROM CUSTOMER;
-
--- Reset Auto Increments
-ALTER TABLE CUSTOMER AUTO_INCREMENT = 1;
-ALTER TABLE MANAGER AUTO_INCREMENT = 1;
-ALTER TABLE TURF AUTO_INCREMENT = 1;
-ALTER TABLE BOOKING AUTO_INCREMENT = 1;
-ALTER TABLE PAYMENT AUTO_INCREMENT = 1;
 
 -- 1. Insert Sample Managers
 -- Password for all sample managers is: manager123
@@ -44,7 +28,6 @@ INSERT INTO TURF (turf_id, turf_name, location, price, description, image_url) V
 (5, 'Green Valley Arena', 'Mapusa Hillside, Mapusa', 1100.00, 'Scenic enclosed turf facility with pro-grade non-abrasive turf infill, night floodlights, and refreshment lounge. Great for friendly evening fixtures.', '/assets/turf-greenvalley.jpg');
 
 -- 4. Insert Sample Bookings
--- Demonstrates confirmed, completed, and pending bookings
 INSERT INTO BOOKING (booking_id, customer_id, turf_id, booking_date, booking_time, duration, status, total_amount) VALUES
 (1, 1, 1, '2026-11-22', '18:00:00', 2, 'CONFIRMED', 2400.00),
 (2, 2, 2, '2026-11-22', '19:00:00', 1, 'CONFIRMED', 1500.00),
@@ -56,7 +39,6 @@ INSERT INTO BOOKING (booking_id, customer_id, turf_id, booking_date, booking_tim
 (8, 3, 1, '2026-11-21', '19:00:00', 1, 'COMPLETED', 1200.00);
 
 -- 5. Insert Corresponding Payments
--- Each booking has an associated payment record
 INSERT INTO PAYMENT (payment_id, booking_id, amount, payment_status, payment_date) VALUES
 (1, 1, 2400.00, 'PAID', '2026-11-21 10:15:00'),
 (2, 2, 1500.00, 'PAID', '2026-11-21 11:30:00'),

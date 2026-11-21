@@ -138,7 +138,7 @@ async function createBooking(req, res) {
     // 2. Perform Concurrency-Safe Transaction
     const bookingResult = await db.withTransaction(async (conn) => {
       // Step A: Lock and verify turf existence and pricing
-      const [turfs] = await conn.query('SELECT turf_id, turf_name, price FROM TURF WHERE turf_id = ? FOR UPDATE', [turfId]);
+      const turfs = await conn.query('SELECT turf_id, turf_name, price FROM TURF WHERE turf_id = ?', [turfId]);
       if (turfs.length === 0) {
         throw new Error('Selected turf does not exist.');
       }
@@ -147,24 +147,21 @@ async function createBooking(req, res) {
       const totalAmount = (hourlyPrice * numDuration).toFixed(2);
 
       // Step B: Lock and check conflicting bookings for this turf and date
-      // Interval overlap logic in SQL:
+      // Interval overlap logic in SQLite SQL:
       // Requested interval: [startTimeNormalized, startTimeNormalized + numDuration hours]
       // Conflicting interval: [b.booking_time, b.booking_time + b.duration hours]
       // Overlap condition: (requested_start < existing_end) AND (requested_end > existing_start)
-      const durationSeconds = numDuration * 3600;
-
-      const [conflicts] = await conn.query(
+      const conflicts = await conn.query(
         `SELECT booking_id, booking_time, duration, status
          FROM BOOKING
          WHERE turf_id = ?
            AND booking_date = ?
            AND status != 'CANCELLED'
            AND (
-             ? < ADDTIME(booking_time, SEC_TO_TIME(duration * 3600))
-             AND ADDTIME(?, SEC_TO_TIME(?)) > booking_time
-           )
-         FOR UPDATE`,
-        [turfId, booking_date, startTimeNormalized, startTimeNormalized, durationSeconds]
+             ? < time(booking_time, '+' || duration || ' hours')
+             AND time(?, '+' || ? || ' hours') > booking_time
+           )`,
+        [turfId, booking_date, startTimeNormalized, startTimeNormalized, numDuration]
       );
 
       if (conflicts.length > 0) {
@@ -175,7 +172,7 @@ async function createBooking(req, res) {
       }
 
       // Step C: Insert Booking record
-      const [insertBookingResult] = await conn.query(
+      const insertBookingResult = await conn.query(
         `INSERT INTO BOOKING (customer_id, turf_id, booking_date, booking_time, duration, status, total_amount)
          VALUES (?, ?, ?, ?, ?, 'CONFIRMED', ?)`,
         [customer_id, turfId, booking_date, startTimeNormalized, numDuration, totalAmount]
@@ -184,9 +181,9 @@ async function createBooking(req, res) {
       const newBookingId = insertBookingResult.insertId;
 
       // Step D: Insert matching Payment record (Preserving synopsis entity relationship)
-      const [insertPaymentResult] = await conn.query(
+      const insertPaymentResult = await conn.query(
         `INSERT INTO PAYMENT (booking_id, amount, payment_status, payment_date)
-         VALUES (?, ?, 'PAID', NOW())`,
+         VALUES (?, ?, 'PAID', datetime('now', 'localtime'))`,
         [newBookingId, totalAmount]
       );
 
@@ -282,8 +279,8 @@ async function cancelBooking(req, res) {
 
     // Atomic cancellation and payment refund update
     await db.withTransaction(async (conn) => {
-      await conn.query('UPDATE BOOKING SET status = "CANCELLED" WHERE booking_id = ?', [bookingId]);
-      await conn.query('UPDATE PAYMENT SET payment_status = "REFUNDED" WHERE booking_id = ?', [bookingId]);
+      await conn.query("UPDATE BOOKING SET status = 'CANCELLED' WHERE booking_id = ?", [bookingId]);
+      await conn.query("UPDATE PAYMENT SET payment_status = 'REFUNDED' WHERE booking_id = ?", [bookingId]);
     });
 
     return res.json({
@@ -380,9 +377,9 @@ async function updateBookingStatus(req, res) {
     await db.withTransaction(async (conn) => {
       await conn.query('UPDATE BOOKING SET status = ? WHERE booking_id = ?', [newStatus, bookingId]);
       if (newStatus === 'CANCELLED') {
-        await conn.query('UPDATE PAYMENT SET payment_status = "REFUNDED" WHERE booking_id = ?', [bookingId]);
+        await conn.query("UPDATE PAYMENT SET payment_status = 'REFUNDED' WHERE booking_id = ?", [bookingId]);
       } else if (newStatus === 'COMPLETED' || newStatus === 'CONFIRMED') {
-        await conn.query('UPDATE PAYMENT SET payment_status = "PAID" WHERE booking_id = ?', [bookingId]);
+        await conn.query("UPDATE PAYMENT SET payment_status = 'PAID' WHERE booking_id = ?", [bookingId]);
       }
     });
 

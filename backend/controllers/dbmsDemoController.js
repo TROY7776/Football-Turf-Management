@@ -9,34 +9,32 @@ async function getDatabaseOverview(req, res) {
     const status = db.getStatus();
 
     // 2. Count records in each table
-    const [custCount] = await db.query('SELECT COUNT(*) AS count FROM CUSTOMER');
-    const [mgrCount] = await db.query('SELECT COUNT(*) AS count FROM MANAGER');
-    const [turfCount] = await db.query('SELECT COUNT(*) AS count FROM TURF');
-    const [bookingCount] = await db.query('SELECT COUNT(*) AS count FROM BOOKING');
-    const [paymentCount] = await db.query('SELECT COUNT(*) AS count FROM PAYMENT');
+    const custCount = await db.query('SELECT COUNT(*) AS count FROM CUSTOMER');
+    const mgrCount = await db.query('SELECT COUNT(*) AS count FROM MANAGER');
+    const turfCount = await db.query('SELECT COUNT(*) AS count FROM TURF');
+    const bookingCount = await db.query('SELECT COUNT(*) AS count FROM BOOKING');
+    const paymentCount = await db.query('SELECT COUNT(*) AS count FROM PAYMENT');
 
-    // 3. Table schema metadata from information_schema
+    // 3. Table schema metadata
     const tablesMetadata = await db.query(`
       SELECT 
-        TABLE_NAME, 
-        ENGINE, 
-        TABLE_ROWS, 
-        CREATE_TIME
-      FROM information_schema.TABLES
-      WHERE TABLE_SCHEMA = ?
-      ORDER BY TABLE_NAME ASC
-    `, [db.dbConfig.database]);
+        name AS TABLE_NAME, 
+        'SQLite 3 (Serverless ACID)' AS ENGINE
+      FROM sqlite_master
+      WHERE type = 'table' AND name NOT LIKE 'sqlite_%'
+      ORDER BY name ASC
+    `);
 
     return res.json({
       success: true,
-      databaseName: db.dbConfig.database,
+      databaseName: 'database/turf.db (SQLite 3)',
       dbStatus: status,
       counts: {
-        customers: custCount.count,
-        managers: mgrCount.count,
-        turfs: turfCount.count,
-        bookings: bookingCount.count,
-        payments: paymentCount.count
+        customers: custCount[0].count,
+        managers: mgrCount[0].count,
+        turfs: turfCount[0].count,
+        bookings: bookingCount[0].count,
+        payments: paymentCount[0].count
       },
       tables: tablesMetadata
     });
@@ -72,19 +70,16 @@ async function getTableData(req, res) {
       return copy;
     });
 
-    // Get column descriptions
-    const columns = await db.query(`
-      SELECT 
-        COLUMN_NAME, 
-        COLUMN_TYPE, 
-        IS_NULLABLE, 
-        COLUMN_KEY, 
-        COLUMN_DEFAULT, 
-        EXTRA
-      FROM information_schema.COLUMNS 
-      WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?
-      ORDER BY ORDINAL_POSITION ASC
-    `, [db.dbConfig.database, tableName]);
+    // Get column descriptions from PRAGMA table_info
+    const pragmaCols = await db.query(`PRAGMA table_info(${tableName})`);
+    const columns = pragmaCols.map(col => ({
+      COLUMN_NAME: col.name,
+      COLUMN_TYPE: col.type,
+      IS_NULLABLE: col.notnull ? 'NO' : 'YES',
+      COLUMN_KEY: col.pk ? 'PRI' : '',
+      COLUMN_DEFAULT: col.dflt_value !== null ? col.dflt_value : 'NULL',
+      EXTRA: col.pk ? 'AUTOINCREMENT' : ''
+    }));
 
     return res.json({
       success: true,

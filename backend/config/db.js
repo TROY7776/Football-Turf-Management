@@ -1,121 +1,154 @@
-const mysql = require('mysql2/promise');
+const Database = require('better-sqlite3');
+const fs = require('fs');
+const path = require('path');
 require('dotenv').config();
 
-const dbConfig = {
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'football_turf_management',
-  port: parseInt(process.env.DB_PORT, 10) || 3306,
-  connectionLimit: parseInt(process.env.DB_CONNECTION_LIMIT, 10) || 10,
-  waitForConnections: true,
-  queueLimit: 0,
-  dateStrings: true // Return date/time as strings to prevent timezone shifts
-};
+// SQLite database file path inside project directory
+const dbDirectory = path.join(__dirname, '..', '..', 'database');
+if (!fs.existsSync(dbDirectory)) {
+  fs.mkdirSync(dbDirectory, { recursive: true });
+}
 
-let pool = null;
+const dbFilePath = process.env.SQLITE_DB_PATH || path.join(dbDirectory, 'turf.db');
+
+let db = null;
 let dbStatus = {
   connected: false,
+  engine: 'SQLite 3 (better-sqlite3)',
+  database: 'turf.db',
+  dbPath: dbFilePath,
   error: null,
   lastChecked: null,
   config: {
-    host: dbConfig.host,
-    port: dbConfig.port,
-    database: dbConfig.database,
-    user: dbConfig.user
+    host: 'Local Project File',
+    port: 'In-Process (Zero Setup Required)',
+    database: 'turf.db',
+    user: 'Embedded Engine'
   }
 };
 
 try {
-  pool = mysql.createPool(dbConfig);
-} catch (err) {
-  dbStatus.error = err.message;
-}
+  // Initialize SQLite database instance
+  db = new Database(dbFilePath, {
+    // verbose: process.env.NODE_ENV === 'development' ? console.log : null
+  });
 
-/**
- * Test database connectivity on boot
- */
-async function testConnection() {
+  // Enable Foreign Keys and WAL (Write-Ahead Logging) for superior concurrency and ACID guarantees
+  db.pragma('foreign_keys = ON');
+  db.pragma('journal_mode = WAL');
+
+  dbStatus.connected = true;
+  dbStatus.error = null;
   dbStatus.lastChecked = new Date().toISOString();
-  if (!pool) {
-    dbStatus.connected = false;
-    dbStatus.error = 'MySQL pool was not created';
-    return false;
-  }
+
+  console.log(`✅ [SQLite Connected] Database active at: ${dbFilePath}`);
+
+  // Auto-initialize schema & seed data if database is empty
+  autoInitializeIfEmpty();
+} catch (err) {
+  dbStatus.connected = false;
+  dbStatus.error = err.message;
+  console.error('❌ Failed to initialize SQLite database:', err);
+}
+
+/**
+ * Automatically creates tables and seeds sample data if database is brand new
+ */
+function autoInitializeIfEmpty() {
+  if (!db) return;
   try {
-    const connection = await pool.getConnection();
-    await connection.query('SELECT 1 + 1 AS test');
-    connection.release();
-    dbStatus.connected = true;
-    dbStatus.error = null;
-    console.log(`✅ [MySQL Connected] Successfully connected to "${dbConfig.database}" at ${dbConfig.host}:${dbConfig.port}`);
-    return true;
+    const tableCheck = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='CUSTOMER'").get();
+    
+    if (!tableCheck) {
+      console.log('📦 Empty database detected. Auto-initializing schema from database/schema.sql...');
+      const schemaPath = path.join(dbDirectory, 'schema.sql');
+      if (fs.existsSync(schemaPath)) {
+        const schemaSql = fs.readFileSync(schemaPath, 'utf8');
+        db.exec(schemaSql);
+        console.log('✅ SQLite tables created successfully: CUSTOMER, MANAGER, TURF, BOOKING, PAYMENT.');
+      }
+
+      const seedPath = path.join(dbDirectory, 'seed.sql');
+      if (fs.existsSync(seedPath)) {
+        console.log('🌱 Seeding initial sample data from database/seed.sql...');
+        const seedSql = fs.readFileSync(seedPath, 'utf8');
+        db.exec(seedSql);
+        console.log('✅ Initial seed data inserted (Managers, Customers, Turfs, Bookings, Payments).');
+      }
+    } else {
+      console.log('📂 Existing SQLite database found. Persisted records preserved.');
+    }
   } catch (err) {
-    dbStatus.connected = false;
-    dbStatus.error = `${err.code || 'ERR'}: ${err.message}`;
-    console.warn(`⚠️ [MySQL Warning] Cannot connect to MySQL at ${dbConfig.host}:${dbConfig.port}`);
-    console.warn(`   Reason: ${err.message}`);
-    console.warn(`   Ensure MySQL Server is running and run: npm run db:init`);
-    return false;
+    console.error('⚠️ Auto-initialization warning:', err.message);
   }
 }
 
 /**
- * Execute parameterized query with automatic pool connection release
+ * Execute parameterized query with automatic SELECT vs DML routing
  */
-async function query(sql, params = []) {
-  if (!pool) {
-    throw new Error('Database pool not initialized. Please ensure MySQL is running.');
+function query(sql, params = []) {
+  if (!db) {
+    throw new Error('SQLite database is not initialized.');
   }
-  const [results, fields] = await pool.execute(sql, params);
-  return results;
+
+  const trimmed = sql.trim();
+  const upper = trimmed.toUpperCase();
+
+  // If query is a SELECT, PRAGMA, EXPLAIN, or WITH SELECT
+  if (upper.startsWith('SELECT') || upper.startsWith('PRAGMA') || upper.startsWith('EXPLAIN') || upper.startsWith('WITH')) {
+    const stmt = db.prepare(sql);
+    return stmt.all(params);
+  }
+
+  // Otherwise it is an INSERT, UPDATE, DELETE, or DDL
+  const stmt = db.prepare(sql);
+  const info = stmt.run(params);
+  return {
+    insertId: info.lastInsertRowid,
+    changes: info.changes,
+    ...info
+  };
 }
 
 /**
- * Execute raw multi-line query (for DDL/schema inspections)
- */
-async function rawQuery(sql, params = []) {
-  if (!pool) {
-    throw new Error('Database pool not initialized. Please ensure MySQL is running.');
-  }
-  const [results, fields] = await pool.query(sql, params);
-  return { results, fields };
-}
-
-/**
- * Execute an atomic transaction with automatic rollback on error
+ * Execute an atomic transaction (supports both async and synchronous callbacks)
  */
 async function withTransaction(callback) {
-  if (!pool) {
-    throw new Error('Database pool not initialized. Please ensure MySQL is running.');
+  if (!db) {
+    throw new Error('SQLite database is not initialized.');
   }
-  const connection = await pool.getConnection();
+
+  db.exec('BEGIN IMMEDIATE');
   try {
-    await connection.beginTransaction();
-    const result = await callback(connection);
-    await connection.commit();
+    const result = await callback({
+      query: (sql, params = []) => query(sql, params),
+      raw: db
+    });
+    db.exec('COMMIT');
     return result;
   } catch (err) {
-    await connection.rollback();
+    try {
+      db.exec('ROLLBACK');
+    } catch (_) {}
     throw err;
-  } finally {
-    connection.release();
   }
 }
 
 /**
- * Get current health and connection status
+ * Get current health and status
  */
 function getStatus() {
   return { ...dbStatus };
 }
 
 module.exports = {
-  pool,
+  db,
   query,
-  rawQuery,
   withTransaction,
-  testConnection,
   getStatus,
-  dbConfig
+  dbConfig: {
+    database: 'turf.db',
+    host: 'Local File',
+    port: 'In-Process'
+  }
 };
