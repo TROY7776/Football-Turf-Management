@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Dashboard - Football Turf Management</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="nav-container"></div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+      
+      <!-- Welcome Header -->
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:28px; flex-wrap:wrap; gap:16px;">
+        <div>
+          <span style="color:var(--accent); font-weight:700; text-transform:uppercase; font-size:0.85rem; letter-spacing:0.05em;">Customer Portal</span>
+          <h1 id="welcome-header" style="font-size:2.2rem; color:var(--primary-dark); font-weight:800;">My Dashboard</h1>
+          <p id="welcome-sub" style="color:var(--text-muted);">View your upcoming matches and manage reservations.</p>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <a href="/booking.html" class="btn btn-primary">⚽ Book New Slot</a>
+          <a href="/booking-history.html" class="btn btn-outline-dark">📜 Full Booking History</a>
+        </div>
+      </div>
+
+      <!-- Quick KPI Cards -->
+      <div class="stats-grid">
+        <div class="stat-card accent">
+          <div class="stat-title">Upcoming Matches</div>
+          <div class="stat-value" id="kpi-upcoming">0</div>
+          <div class="stat-sub">Scheduled on or after today</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-title">Completed Matches</div>
+          <div class="stat-value" id="kpi-completed">0</div>
+          <div class="stat-sub">Past match records</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Total Bookings</div>
+          <div class="stat-value" id="kpi-total">0</div>
+          <div class="stat-sub">Lifetime reservations</div>
+        </div>
+        <div class="stat-card amber">
+          <div class="stat-title">Total Spent</div>
+          <div class="stat-value" id="kpi-spent">₹0</div>
+          <div class="stat-sub">Paid transactions</div>
+        </div>
+      </div>
+
+      <!-- Upcoming Bookings Section -->
+      <div style="margin-top: 36px;">
+        <h2 style="font-size: 1.4rem; color: var(--primary-dark); font-weight: 800; margin-bottom: 14px;">
+          📅 Upcoming Match Bookings
+        </h2>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Booking Ref #</th>
+                <th>Football Turf</th>
+                <th>Match Date</th>
+                <th>Slot Time</th>
+                <th>Duration</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Payment</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="upcoming-bookings-tbody">
+              <tr>
+                <td colspan="9" style="text-align:center; padding:30px; color:var(--text-muted);">
+                  Loading your upcoming bookings...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Past / Completed Matches Preview -->
+      <div style="margin-top: 40px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+          <h2 style="font-size: 1.4rem; color: var(--primary-dark); font-weight: 800;">
+            🕒 Recent Past Bookings
+          </h2>
+          <a href="/booking-history.html" style="font-size: 0.9rem; color: var(--primary); font-weight: 600;">
+            View all history &rarr;
+          </a>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Booking Ref #</th>
+                <th>Football Turf</th>
+                <th>Match Date</th>
+                <th>Slot Time</th>
+                <th>Duration</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Payment Status</th>
+              </tr>
+            </thead>
+            <tbody id="past-bookings-tbody">
+              <tr>
+                <td colspan="8" style="text-align:center; padding:30px; color:var(--text-muted);">
+                  Loading recent bookings...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-bottom">
+      &copy; 2026 Football Turf Management System. College DBMS Mini-Project.
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/customer.js"></script>
+</body>
+</html>

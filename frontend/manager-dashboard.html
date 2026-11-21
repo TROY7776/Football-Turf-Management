@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manager Dashboard - Football Turf Management</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="nav-container"></div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+      
+      <!-- Manager Header -->
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:24px; flex-wrap:wrap; gap:16px;">
+        <div>
+          <span style="color:var(--accent); font-weight:700; text-transform:uppercase; font-size:0.85rem; letter-spacing:0.05em;">Administrative Operations</span>
+          <h1 style="font-size:2.2rem; color:var(--primary-dark); font-weight:800;">Turf Manager Dashboard</h1>
+          <p id="manager-info" style="color:var(--text-muted);">Real-time metrics, turf facility management, customer records & booking administration.</p>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <a href="/database-overview.html" class="btn btn-secondary">
+            🎓 Database Overview (DBMS Demonstration)
+          </a>
+        </div>
+      </div>
+
+      <!-- Top Metric Cards -->
+      <div class="stats-grid">
+        <div class="stat-card accent">
+          <div class="stat-title">Total Customers</div>
+          <div class="stat-value" id="stat-customers">0</div>
+          <div class="stat-sub">Registered customer accounts</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-title">Total Turfs</div>
+          <div class="stat-value" id="stat-turfs">0</div>
+          <div class="stat-sub">Active football facilities</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Total Bookings</div>
+          <div class="stat-value" id="stat-bookings">0</div>
+          <div class="stat-sub">Confirmed & completed slots</div>
+        </div>
+        <div class="stat-card amber">
+          <div class="stat-title">Total Revenue</div>
+          <div class="stat-value" id="stat-revenue">₹0.00</div>
+          <div class="stat-sub">Recorded paid transactions</div>
+        </div>
+      </div>
+
+      <!-- Management Navigation Tabs -->
+      <div style="display:flex; border-bottom:2px solid var(--border-color); margin-bottom:24px; gap:8px; overflow-x:auto;">
+        <button type="button" class="btn btn-sm btn-outline-dark active-tab" id="tab-btn-turfs" onclick="switchTab('turfs')">🏟️ Turf Management</button>
+        <button type="button" class="btn btn-sm btn-outline-dark" id="tab-btn-bookings" onclick="switchTab('bookings')">📋 Bookings Administration</button>
+        <button type="button" class="btn btn-sm btn-outline-dark" id="tab-btn-customers" onclick="switchTab('customers')">👥 Customer Records</button>
+        <button type="button" class="btn btn-sm btn-outline-dark" id="tab-btn-usage" onclick="switchTab('usage')">📊 Usage & Revenue Report</button>
+        <button type="button" class="btn btn-sm btn-outline-dark" id="tab-btn-monitor" onclick="switchTab('monitor')">🕒 Slot Occupancy Monitor</button>
+      </div>
+
+      <!-- =========================================================
+           TAB 1: TURF MANAGEMENT (CRUD)
+           ========================================================= -->
+      <section id="tab-section-turfs" class="tab-section">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <h2 style="font-size:1.35rem; color:var(--primary-dark); font-weight:800;">Football Turf Facilities (CRUD)</h2>
+          <button type="button" class="btn btn-primary btn-sm" onclick="openAddTurfModal()">
+            ➕ Add New Turf
+          </button>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Preview</th>
+                <th>Turf Name</th>
+                <th>Location</th>
+                <th>Hourly Price</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="turfs-table-tbody">
+              <tr><td colspan="7" style="text-align:center; padding:30px;">Loading turfs...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAB 2: BOOKINGS ADMINISTRATION
+           ========================================================= -->
+      <section id="tab-section-bookings" class="tab-section" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
+          <h2 style="font-size:1.35rem; color:var(--primary-dark); font-weight:800;">All Customer Reservations</h2>
+          
+          <!-- Filters -->
+          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <input type="date" id="filter-booking-date" class="form-control" style="width:160px; padding:6px 10px;">
+            <select id="filter-booking-turf" class="form-control" style="width:180px; padding:6px 10px;">
+              <option value="">All Turfs</option>
+            </select>
+            <select id="filter-booking-status" class="form-control" style="width:140px; padding:6px 10px;">
+              <option value="">All Statuses</option>
+              <option value="CONFIRMED">CONFIRMED</option>
+              <option value="COMPLETED">COMPLETED</option>
+              <option value="CANCELLED">CANCELLED</option>
+            </select>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="filterBookings()">Filter</button>
+            <button type="button" class="btn btn-outline-dark btn-sm" onclick="resetBookingFilters()">Reset</button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Ref #</th>
+                <th>Customer</th>
+                <th>Contact</th>
+                <th>Turf Facility</th>
+                <th>Date</th>
+                <th>Time Slot</th>
+                <th>Duration</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Payment</th>
+                <th>Update Status</th>
+              </tr>
+            </thead>
+            <tbody id="all-bookings-tbody">
+              <tr><td colspan="11" style="text-align:center; padding:30px;">Loading reservations...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAB 3: CUSTOMER RECORDS
+           ========================================================= -->
+      <section id="tab-section-customers" class="tab-section" style="display:none;">
+        <h2 style="font-size:1.35rem; color:var(--primary-dark); font-weight:800; margin-bottom:16px;">
+          Registered Customers (CUSTOMERS Table)
+        </h2>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Customer ID</th>
+                <th>Full Name</th>
+                <th>Email Address</th>
+                <th>Phone Number</th>
+                <th>Registered Date</th>
+                <th>Bookings Count</th>
+                <th>Total Spent</th>
+              </tr>
+            </thead>
+            <tbody id="customers-table-tbody">
+              <tr><td colspan="7" style="text-align:center; padding:30px;">Loading customer records...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAB 4: USAGE & REVENUE REPORT
+           ========================================================= -->
+      <section id="tab-section-usage" class="tab-section" style="display:none;">
+        <h2 style="font-size:1.35rem; color:var(--primary-dark); font-weight:800; margin-bottom:16px;">
+          Turf Utilization & Financial Performance
+        </h2>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Turf ID</th>
+                <th>Turf Name</th>
+                <th>Location</th>
+                <th>Standard Rate</th>
+                <th>Total Bookings</th>
+                <th>Total Hours Booked</th>
+                <th>Gross Revenue Generated</th>
+              </tr>
+            </thead>
+            <tbody id="usage-table-tbody">
+              <tr><td colspan="7" style="text-align:center; padding:30px;">Loading report...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAB 5: LIVE SLOT MONITOR
+           ========================================================= -->
+      <section id="tab-section-monitor" class="tab-section" style="display:none;">
+        <div style="background:#ffffff; border:1px solid var(--border-color); border-radius:var(--radius-md); padding:20px; margin-bottom:20px;">
+          <h2 style="font-size:1.35rem; color:var(--primary-dark); font-weight:800; margin-bottom:12px;">Slot Occupancy Monitor</h2>
+          <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:flex-end;">
+            <div class="form-group" style="margin-bottom:0; flex:1; min-width:220px;">
+              <label>Select Turf:</label>
+              <select id="monitor-turf" class="form-control"></select>
+            </div>
+            <div class="form-group" style="margin-bottom:0; width:180px;">
+              <label>Select Date:</label>
+              <input type="date" id="monitor-date" class="form-control">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="checkMonitorSlots()">Inspect Slots</button>
+          </div>
+        </div>
+
+        <div id="monitor-slots-grid" class="slots-grid">
+          <div style="grid-column: 1 / -1; text-align:center; padding:30px; color:var(--text-muted); background:#f8fafc; border-radius:var(--radius-sm);">
+            Select a turf and date to review booked vs open slots.
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Add/Edit Turf Modal -->
+  <div class="modal-overlay" id="turf-crud-modal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="turf-crud-modal-title">Add New Football Turf</h3>
+        <button class="modal-close" onclick="closeTurfCrudModal()">&times;</button>
+      </div>
+      <form id="turf-crud-form">
+        <input type="hidden" id="crud-turf-id" value="">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="crud-turf-name">Turf Name</label>
+            <input type="text" id="crud-turf-name" class="form-control" placeholder="e.g. Bernabeu Turf Arena" required>
+          </div>
+
+          <div class="form-group">
+            <label for="crud-turf-location">Location Address</label>
+            <input type="text" id="crud-turf-location" class="form-control" placeholder="e.g. Panaji Bay Road, North Goa" required>
+          </div>
+
+          <div class="form-group">
+            <label for="crud-turf-price">Hourly Price (₹ INR)</label>
+            <input type="number" id="crud-turf-price" class="form-control" placeholder="e.g. 1500.00" step="50" min="100" required>
+          </div>
+
+          <div class="form-group">
+            <label for="crud-turf-desc">Description & Facilities</label>
+            <textarea id="crud-turf-desc" class="form-control" rows="3" placeholder="Provide details on pitch turf type, dimensions, lights..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="crud-turf-image">Turf Image Path / URL</label>
+            <select id="crud-turf-image" class="form-control">
+              <option value="/assets/turf-champions.jpg">Champions Arena (Vector Pitch 1)</option>
+              <option value="/assets/turf-wembley.jpg">Wembley Turf Park (Vector Pitch 2)</option>
+              <option value="/assets/turf-kickoff.jpg">KickOff Ground (Vector Pitch 3)</option>
+              <option value="/assets/turf-premier.jpg">Premier Football Hub (Vector Pitch 4)</option>
+              <option value="/assets/turf-greenvalley.jpg">Green Valley Arena (Vector Pitch 5)</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" onclick="closeTurfCrudModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-turf">Save Turf to MySQL</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-bottom">
+      &copy; 2026 Football Turf Management System. College DBMS Mini-Project.
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/manager.js"></script>
+</body>
+</html>

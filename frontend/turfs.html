@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Football Turfs - Browse & Book</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="nav-container"></div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+      <div style="margin-bottom: 24px;">
+        <span style="color: var(--accent); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em;">Our Venues</span>
+        <h1 style="font-size: 2.2rem; color: var(--primary-dark); font-weight: 800;">Browse Football Turfs</h1>
+        <p style="color: var(--text-muted);">Explore high-quality football turfs with floodlights, FIFA-approved grass, and real-time availability.</p>
+      </div>
+
+      <!-- Filter / Search Toolbar -->
+      <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px 20px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center; justify-content: space-between; box-shadow: var(--shadow-sm);">
+        <div style="display: flex; gap: 12px; flex: 1; min-width: 280px;">
+          <input type="text" id="turf-search" class="form-control" placeholder="Search by turf name, location, or features..." style="max-width: 400px;">
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-search">Search</button>
+          <button type="button" class="btn btn-outline-dark btn-sm" id="btn-reset">Reset</button>
+        </div>
+        <div style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600;" id="turf-count-badge">
+          Loading turfs...
+        </div>
+      </div>
+
+      <!-- Turfs Grid Container -->
+      <div id="turfs-grid" class="grid-cards">
+        <div style="text-align: center; padding: 40px; color: var(--text-muted); grid-column: 1 / -1;">
+          Loading turfs from database...
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Turf Details Modal -->
+  <div class="modal-overlay" id="turf-modal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="modal-turf-name">Turf Details</h3>
+        <button class="modal-close" onclick="closeTurfModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <img id="modal-turf-image" src="" alt="Turf" style="width:100%; height:240px; object-fit:cover; border-radius:var(--radius-sm); margin-bottom:16px;">
+        <div style="margin-bottom: 12px;">
+          <span style="font-size: 0.9rem; color: var(--text-muted);">📍 Location:</span>
+          <p id="modal-turf-location" style="font-weight: 600; color: var(--text-main);"></p>
+        </div>
+        <div style="margin-bottom: 12px;">
+          <span style="font-size: 0.9rem; color: var(--text-muted);">💰 Hourly Rate:</span>
+          <p id="modal-turf-price" style="font-size: 1.3rem; font-weight: 800; color: var(--primary);"></p>
+        </div>
+        <div style="margin-bottom: 16px;">
+          <span style="font-size: 0.9rem; color: var(--text-muted);">📋 Facility Overview & Specifications:</span>
+          <p id="modal-turf-desc" style="color: #4b5563; font-size: 0.95rem; margin-top: 4px;"></p>
+        </div>
+        <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 12px;">
+          <div style="font-weight: 700; font-size: 0.85rem; color: var(--primary-dark); margin-bottom: 6px;">Facility Amenities:</div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; font-size: 0.82rem; color: #475569;">
+            <span>💡 High-lumen LED Floodlights</span>
+            <span>🚿 Dressing & Shower Rooms</span>
+            <span>🚗 Free Customer Parking</span>
+            <span>🎽 Match Bibs & Balls Provided</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" onclick="closeTurfModal()">Close</button>
+        <a id="modal-book-link" href="#" class="btn btn-primary">Book This Turf Now</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-bottom">
+      &copy; 2026 Football Turf Management System. College DBMS Mini-Project.
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/turfs.js"></script>
+</body>
+</html>

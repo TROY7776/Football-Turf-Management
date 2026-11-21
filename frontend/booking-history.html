@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking History - Football Turf Management</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="nav-container"></div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+      
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:24px; flex-wrap:wrap; gap:16px;">
+        <div>
+          <span style="color:var(--accent); font-weight:700; text-transform:uppercase; font-size:0.85rem; letter-spacing:0.05em;">Reservation Records</span>
+          <h1 style="font-size:2.2rem; color:var(--primary-dark); font-weight:800;">Complete Booking History</h1>
+          <p style="color:var(--text-muted);">Comprehensive record of all past, present, and cancelled bookings with payment details.</p>
+        </div>
+        <div>
+          <a href="/customer-dashboard.html" class="btn btn-outline-dark btn-sm">&larr; Back to Dashboard</a>
+        </div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div style="background:#ffffff; border:1px solid var(--border-color); border-radius:var(--radius-md); padding:16px 20px; display:flex; gap:16px; flex-wrap:wrap; align-items:center; margin-bottom:20px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <label style="font-size:0.88rem; font-weight:600;">Filter by Status:</label>
+          <select id="filter-history-status" class="form-control" style="width:160px; padding:6px 10px;">
+            <option value="ALL">All Statuses</option>
+            <option value="CONFIRMED">CONFIRMED</option>
+            <option value="COMPLETED">COMPLETED</option>
+            <option value="CANCELLED">CANCELLED</option>
+          </select>
+        </div>
+        <div id="history-count" style="margin-left:auto; font-size:0.88rem; color:var(--text-muted); font-weight:600;">
+          Loading...
+        </div>
+      </div>
+
+      <!-- Full History Table -->
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Ref #</th>
+              <th>Football Turf Facility</th>
+              <th>Location</th>
+              <th>Match Date</th>
+              <th>Time Slot</th>
+              <th>Duration</th>
+              <th>Rate / hr</th>
+              <th>Total Amount</th>
+              <th>Status</th>
+              <th>Payment Info</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="history-table-tbody">
+            <tr>
+              <td colspan="11" style="text-align:center; padding:30px; color:var(--text-muted);">
+                Loading history records from database...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-bottom">
+      &copy; 2026 Football Turf Management System. College DBMS Mini-Project.
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/customer.js"></script>
+</body>
+</html>

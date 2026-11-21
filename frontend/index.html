@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TurfBook - Football Turf Management System</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Dynamic Navigation Bar -->
+  <header class="navbar">
+    <div class="nav-container"></div>
+  </header>
+
+  <main class="main-content">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>Book Premium Football Turfs <span>Instantly</span></h1>
+          <p>
+            Experience seamless football turf reservations across prime locations. Check real-time slot availability, reserve matches with zero overlapping conflicts, and track your booking history effortlessly.
+          </p>
+          <div class="hero-cta">
+            <a href="/turfs.html" class="btn btn-primary btn-lg">⚽ Browse Turfs</a>
+            <a href="/booking.html" class="btn btn-outline btn-lg">📅 Book a Slot</a>
+            <a href="/login.html" class="btn btn-secondary btn-lg">Manager / Customer Login</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <h3>⚡ Powered by Relational DBMS</h3>
+          <ul class="hero-card-list">
+            <li>🛡️ <strong>ACID Transactions:</strong> MySQL InnoDB row-locking guarantees zero overlapping bookings.</li>
+            <li>📊 <strong>College Project Entities:</strong> CUSTOMER, MANAGER, TURF, BOOKING, and PAYMENT.</li>
+            <li>⏱️ <strong>Real-Time Availability:</strong> Direct parameterized SQL checks for open slots.</li>
+            <li>💳 <strong>Instant Payment Mapping:</strong> Automatic synchronized transaction logging.</li>
+            <li>🎓 <strong>DBMS Demonstration:</strong> Dedicated live SQL overview for examiner review.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Turf Listings Preview -->
+    <section class="container" style="margin-top: 40px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px;">
+        <div>
+          <span style="color: var(--accent); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em;">Featured Venues</span>
+          <h2 style="font-size: 2rem; color: var(--primary-dark); font-weight: 800;">Available Football Turfs</h2>
+        </div>
+        <a href="/turfs.html" class="btn btn-outline-dark btn-sm">View All Turfs &rarr;</a>
+      </div>
+
+      <div id="featured-turfs-grid" class="grid-cards">
+        <!-- Injected via JavaScript from backend MySQL database -->
+        <div style="text-align: center; padding: 40px; color: var(--text-muted); grid-column: 1 / -1;">
+          Loading football turf listings from database...
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="container" style="margin-top: 60px;">
+      <div style="text-align: center; max-width: 700px; margin: 0 auto 36px;">
+        <span style="color: var(--accent); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em;">Simple Process</span>
+        <h2 style="font-size: 2rem; color: var(--primary-dark); font-weight: 800;">How Turf Booking Works</h2>
+        <p style="color: var(--text-muted);">From browsing to kickoff in four straightforward steps.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;">
+        <div style="background:#ffffff; border:1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; text-align: center;">
+          <div style="font-size: 2.2rem; margin-bottom: 12px;">🏟️</div>
+          <h3 style="font-size: 1.15rem; color: var(--primary-dark); margin-bottom: 8px;">1. Choose Turf</h3>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">Browse our verified football turfs, compare facilities, pitch dimensions, and hourly prices.</p>
+        </div>
+
+        <div style="background:#ffffff; border:1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; text-align: center;">
+          <div style="font-size: 2.2rem; margin-bottom: 12px;">📅</div>
+          <h3 style="font-size: 1.15rem; color: var(--primary-dark); margin-bottom: 8px;">2. Pick Date & Slot</h3>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">Select your match day and choose an open hourly slot verified by real-time MySQL checks.</p>
+        </div>
+
+        <div style="background:#ffffff; border:1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; text-align: center;">
+          <div style="font-size: 2.2rem; margin-bottom: 12px;">🔒</div>
+          <h3 style="font-size: 1.15rem; color: var(--primary-dark); margin-bottom: 8px;">3. Instant Booking</h3>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">Database row-level locks prevent conflicting reservations and instantly record the payment.</p>
+        </div>
+
+        <div style="background:#ffffff; border:1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; text-align: center;">
+          <div style="font-size: 2.2rem; margin-bottom: 12px;">⚽</div>
+          <h3 style="font-size: 1.15rem; color: var(--primary-dark); margin-bottom: 8px;">4. Game On</h3>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">Receive your booking reference, view upcoming matches on your dashboard, and enjoy your game.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- About College Project Section -->
+    <section style="background-color: #f1f5f9; padding: 50px 20px; margin-top: 70px; border-top: 1px solid var(--border-color);">
+      <div class="container" style="padding: 0;">
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center;">
+          <div>
+            <span style="color: var(--primary-light); font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em;">DBMS Mini Project Synopsis</span>
+            <h2 style="font-size: 1.9rem; color: var(--primary-dark); font-weight: 800; margin: 8px 0 16px;">Built Strictly to College Specifications</h2>
+            <p style="color: var(--text-main); margin-bottom: 16px;">
+              This system is built directly upon the approved College DBMS Mini-Project synopsis. It satisfies all core functional modules:
+            </p>
+            <ul style="list-style: disc; padding-left: 20px; color: var(--text-muted); display: flex; flex-direction: column; gap: 6px; font-size: 0.92rem;">
+              <li><strong>Registration & Authentication Module:</strong> Role-based access for Customers and Turf Managers with Bcrypt password security.</li>
+              <li><strong>Turf Booking Module:</strong> Interactive slot selection with backend transaction isolation preventing double booking.</li>
+              <li><strong>Turf Management Module:</strong> Comprehensive manager dashboard for creating, editing, and managing turf venues.</li>
+              <li><strong>Booking History Module:</strong> Filterable reservation logs and payment tracking for customers.</li>
+              <li><strong>Turf Usage & Records Module:</strong> Managerial analytics, utilization reports, and database examiner overview.</li>
+            </ul>
+          </div>
+
+          <div style="background: #ffffff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px;">
+            <h4 style="color: var(--primary-dark); font-size: 1.1rem; margin-bottom: 12px;">Project Student Team</h4>
+            <div style="font-size: 0.9rem; color: var(--text-main); display: flex; flex-direction: column; gap: 10px;">
+              <div style="display:flex; justify-content:space-between; border-bottom:1px solid #f1f5f9; padding-bottom:6px;">
+                <span>Gavril Anthony Barreto</span>
+                <span style="font-weight:700; color:var(--primary);">Roll No: 24CE126</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; border-bottom:1px solid #f1f5f9; padding-bottom:6px;">
+                <span>Jayden Ansall Fernandes</span>
+                <span style="font-weight:700; color:var(--primary);">Roll No: 24CE128</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; padding-bottom:6px;">
+                <span>Gavin Troy Fernandes</span>
+                <span style="font-weight:700; color:var(--primary);">Roll No: 24CE125</span>
+              </div>
+            </div>
+            <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border-color); font-size: 0.8rem; color: var(--text-muted);">
+              Technology: Node.js, Express.js, MySQL (mysql2), Vanilla HTML5/CSS3/ES6.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact & Location Section -->
+    <section class="container" style="margin-top: 50px;">
+      <div style="text-align: center; max-width: 600px; margin: 0 auto 30px;">
+        <h2 style="font-size: 1.8rem; color: var(--primary-dark); font-weight: 800;">Contact & Support</h2>
+        <p style="color: var(--text-muted);">Have questions or require special venue arrangements? Get in touch with our turf managers.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+        <div style="background:#ffffff; border:1px solid var(--border-color); border-radius:var(--radius-md); padding:20px;">
+          <h4 style="color:var(--primary); margin-bottom:6px;">📍 Central Administrative Office</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted);">Margao Sports Hub, Near Jawaharlal Nehru Stadium, Fatorda, Goa - 403602</p>
+        </div>
+        <div style="background:#ffffff; border:1px solid var(--border-color); border-radius:var(--radius-md); padding:20px;">
+          <h4 style="color:var(--primary); margin-bottom:6px;">📞 Manager Hotline</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted);">+91 98123 45678 / +91 98234 56789<br>Daily 06:00 AM – 11:00 PM</p>
+        </div>
+        <div style="background:#ffffff; border:1px solid var(--border-color); border-radius:var(--radius-md); padding:20px;">
+          <h4 style="color:var(--primary); margin-bottom:6px;">✉️ Email Support</h4>
+          <p style="font-size:0.9rem; color:var(--text-muted);">manager@turf.com / support@turfbook.local<br>Response within 2 hours</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div>
+        <h4>⚽ TurfBook Management System</h4>
+        <p style="color: #cbd5e1; margin-bottom: 12px; font-size: 0.9rem;">
+          A full-stack database-driven web application for reserving football turfs, managing sports facilities, and demonstrating advanced relational database principles.
+        </p>
+        <p style="color: #64748b; font-size: 0.8rem;">Database Engine: MySQL InnoDB with ACID Transaction Isolation</p>
+      </div>
+      <div>
+        <h4>Quick Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/turfs.html">Browse Turfs</a></li>
+          <li><a href="/booking.html">Book Slot</a></li>
+          <li><a href="/login.html">Login</a></li>
+          <li><a href="/register.html">Register Customer</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Management & DBMS</h4>
+        <ul class="footer-links">
+          <li><a href="/manager-dashboard.html">Manager Dashboard</a></li>
+          <li><a href="/database-overview.html" style="color: #f59e0b; font-weight: 700;">DBMS Demonstration</a></li>
+          <li><a href="/customer-dashboard.html">Customer Dashboard</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Football Turf Management System. College DBMS Mini-Project. Built with Node.js & MySQL.
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
