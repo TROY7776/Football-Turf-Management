@@ -190,7 +190,7 @@ Testing accounts pre-seeded in the database:
 *(Full access to manager dashboard, turf CRUD, bookings administration, and DBMS demonstration page).*
 
 ### 2. Customer Accounts:
-- **Email:** `gavril@example.com` | **Password:** `customer123`
+- **Email:** `demo@example.com` | **Password:** `customer123`
 - **Email:** `jayden@example.com` | **Password:** `customer123`
 - **Email:** `john@example.com` | **Password:** `customer123`
 

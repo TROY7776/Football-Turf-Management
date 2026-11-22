@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <!-- Night sky -->
+  <rect width="800" height="450" fill="#08111f"/>
+  <!-- Stars -->
+  <circle cx="100" cy="40" r="1.5" fill="white" opacity="0.7"/>
+  <circle cx="200" cy="20" r="1" fill="white" opacity="0.5"/>
+  <circle cx="350" cy="55" r="1.5" fill="white" opacity="0.6"/>
+  <circle cx="600" cy="30" r="1" fill="white" opacity="0.5"/>
+  <circle cx="700" cy="50" r="1.5" fill="white" opacity="0.7"/>
+  <!-- Large professional pitch -->
+  <rect x="0" y="195" width="800" height="255" fill="#0f4a20"/>
+  <!-- Stripes -->
+  <rect x="0" y="195" width="90" height="255" fill="#125a26"/>
+  <rect x="90" y="195" width="90" height="255" fill="#0f4a20"/>
+  <rect x="180" y="195" width="90" height="255" fill="#125a26"/>
+  <rect x="270" y="195" width="90" height="255" fill="#0f4a20"/>
+  <rect x="360" y="195" width="90" height="255" fill="#125a26"/>
+  <rect x="450" y="195" width="90" height="255" fill="#0f4a20"/>
+  <rect x="540" y="195" width="90" height="255" fill="#125a26"/>
+  <rect x="630" y="195" width="90" height="255" fill="#0f4a20"/>
+  <rect x="720" y="195" width="80" height="255" fill="#125a26"/>
+  <!-- Pitch markings -->
+  <rect x="25" y="205" width="750" height="235" fill="none" stroke="white" stroke-width="3"/>
+  <line x1="400" y1="205" x2="400" y2="440" stroke="white" stroke-width="2.5"/>
+  <!-- Large 9-a-side centre circle -->
+  <circle cx="400" cy="322" r="75" fill="none" stroke="white" stroke-width="2.5"/>
+  <circle cx="400" cy="322" r="5" fill="white"/>
+  <!-- Large penalty areas -->
+  <rect x="25" y="248" width="165" height="135" fill="none" stroke="white" stroke-width="2.5"/>
+  <rect x="610" y="248" width="165" height="135" fill="none" stroke="white" stroke-width="2.5"/>
+  <!-- Goal areas -->
+  <rect x="25" y="285" width="65" height="61" fill="none" stroke="white" stroke-width="2"/>
+  <rect x="710" y="285" width="65" height="61" fill="none" stroke="white" stroke-width="2"/>
+  <!-- Pro goalposts -->
+  <rect x="5" y="290" width="8" height="65" fill="white"/>
+  <rect x="0" y="287" width="38" height="5" fill="white"/>
+  <rect x="787" y="290" width="8" height="65" fill="white"/>
+  <rect x="762" y="287" width="38" height="5" fill="white"/>
+  <!-- 4 Corner floodlights -->
+  <rect x="55" y="20" width="12" height="175" fill="#6a7a8a"/>
+  <rect x="30" y="10" width="62" height="16" fill="#ffe57a" rx="3"/>
+  <ellipse cx="61" cy="18" rx="45" ry="18" fill="#fff9c4" opacity="0.4"/>
+  <rect x="733" y="20" width="12" height="175" fill="#6a7a8a"/>
+  <rect x="708" y="10" width="62" height="16" fill="#ffe57a" rx="3"/>
+  <ellipse cx="739" cy="18" rx="45" ry="18" fill="#fff9c4" opacity="0.4"/>
+  <!-- Stands with dugouts -->
+  <rect x="0" y="130" width="800" height="68" fill="#0d1d2e"/>
+  <line x1="0" y1="140" x2="800" y2="140" stroke="#162c46" stroke-width="2"/>
+  <line x1="0" y1="153" x2="800" y2="153" stroke="#162c46" stroke-width="2"/>
+  <line x1="0" y1="166" x2="800" y2="166" stroke="#162c46" stroke-width="2"/>
+  <line x1="0" y1="179" x2="800" y2="179" stroke="#162c46" stroke-width="2"/>
+  <!-- Dugout boxes -->
+  <rect x="280" y="192" width="80" height="18" fill="#0a2a0a" stroke="white" stroke-width="1.5" rx="2"/>
+  <rect x="440" y="192" width="80" height="18" fill="#0a2a0a" stroke="white" stroke-width="1.5" rx="2"/>
+  <!-- Label -->
+  <text x="400" y="92" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="white" text-anchor="middle">PREMIER FOOTBALL HUB</text>
+  <text x="400" y="114" font-family="Arial, sans-serif" font-size="13" fill="#22c55e" text-anchor="middle">CHAMPIONSHIP 9-A-SIDE · VASCO DA GAMA</text>
+</svg>

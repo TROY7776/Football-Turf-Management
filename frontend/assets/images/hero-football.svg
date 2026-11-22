@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500">
+  <!-- Night sky - wide arena -->
+  <rect width="1200" height="500" fill="#06101a"/>
+  <!-- Stars -->
+  <circle cx="80" cy="30" r="1.5" fill="white" opacity="0.6"/>
+  <circle cx="200" cy="50" r="1" fill="white" opacity="0.5"/>
+  <circle cx="400" cy="20" r="1.5" fill="white" opacity="0.7"/>
+  <circle cx="600" cy="45" r="1" fill="white" opacity="0.4"/>
+  <circle cx="800" cy="25" r="1.5" fill="white" opacity="0.6"/>
+  <circle cx="1000" cy="40" r="1" fill="white" opacity="0.5"/>
+  <circle cx="1100" cy="15" r="1.5" fill="white" opacity="0.7"/>
+  <!-- Large stadium bowl -->
+  <ellipse cx="600" cy="145" rx="560" ry="90" fill="#0d1e2e"/>
+  <ellipse cx="600" cy="145" rx="480" ry="70" fill="#112236"/>
+  <!-- Stand rows - top tier -->
+  <ellipse cx="600" cy="140" rx="470" ry="66" fill="none" stroke="#1a3050" stroke-width="2"/>
+  <ellipse cx="600" cy="148" rx="455" ry="58" fill="none" stroke="#1a3050" stroke-width="2"/>
+  <ellipse cx="600" cy="156" rx="440" ry="50" fill="none" stroke="#1a3050" stroke-width="2"/>
+  <ellipse cx="600" cy="164" rx="420" ry="42" fill="none" stroke="#1a3050" stroke-width="2"/>
+  <!-- Pitch - wide landscape -->
+  <rect x="0" y="210" width="1200" height="290" fill="#165c28"/>
+  <!-- Beautiful stripes - wide -->
+  <rect x="0" y="210" width="120" height="290" fill="#1a6e30"/>
+  <rect x="120" y="210" width="120" height="290" fill="#165c28"/>
+  <rect x="240" y="210" width="120" height="290" fill="#1a6e30"/>
+  <rect x="360" y="210" width="120" height="290" fill="#165c28"/>
+  <rect x="480" y="210" width="120" height="290" fill="#1a6e30"/>
+  <rect x="600" y="210" width="120" height="290" fill="#165c28"/>
+  <rect x="720" y="210" width="120" height="290" fill="#1a6e30"/>
+  <rect x="840" y="210" width="120" height="290" fill="#165c28"/>
+  <rect x="960" y="210" width="120" height="290" fill="#1a6e30"/>
+  <rect x="1080" y="210" width="120" height="290" fill="#165c28"/>
+  <!-- Pitch markings -->
+  <rect x="50" y="222" width="1100" height="268" fill="none" stroke="white" stroke-width="3.5"/>
+  <line x1="600" y1="222" x2="600" y2="490" stroke="white" stroke-width="3"/>
+  <!-- Centre circle -->
+  <circle cx="600" cy="356" r="90" fill="none" stroke="white" stroke-width="2.5"/>
+  <circle cx="600" cy="356" r="6" fill="white"/>
+  <!-- Penalty spots -->
+  <circle cx="170" cy="356" r="5" fill="white"/>
+  <circle cx="1030" cy="356" r="5" fill="white"/>
+  <!-- Full penalty areas -->
+  <rect x="50" y="276" width="210" height="160" fill="none" stroke="white" stroke-width="2.5"/>
+  <rect x="940" y="276" width="210" height="160" fill="none" stroke="white" stroke-width="2.5"/>
+  <!-- Goal areas -->
+  <rect x="50" y="315" width="80" height="82" fill="none" stroke="white" stroke-width="2"/>
+  <rect x="1070" y="315" width="80" height="82" fill="none" stroke="white" stroke-width="2"/>
+  <!-- Pro-grade goalposts - left -->
+  <rect x="20" y="322" width="10" height="80" fill="white"/>
+  <rect x="10" y="318" width="52" height="6" fill="white"/>
+  <!-- Net suggestion - left -->
+  <line x1="10" y1="318" x2="10" y2="400" stroke="white" stroke-width="1.5" opacity="0.4"/>
+  <!-- Pro-grade goalposts - right -->
+  <rect x="1170" y="322" width="10" height="80" fill="white"/>
+  <rect x="1138" y="318" width="52" height="6" fill="white"/>
+  <!-- Net suggestion - right -->
+  <line x1="1190" y1="318" x2="1190" y2="400" stroke="white" stroke-width="1.5" opacity="0.4"/>
+  <!-- Floodlight towers - 4 corners, tall -->
+  <rect x="68" y="20" width="16" height="195" fill="#6a7a8a"/>
+  <rect x="38" y="8" width="78" height="20" fill="#ffe57a" rx="4"/>
+  <ellipse cx="77" cy="18" rx="60" ry="22" fill="#fff9c4" opacity="0.5"/>
+  <rect x="1116" y="20" width="16" height="195" fill="#6a7a8a"/>
+  <rect x="1086" y="8" width="78" height="20" fill="#ffe57a" rx="4"/>
+  <ellipse cx="1124" cy="18" rx="60" ry="22" fill="#fff9c4" opacity="0.5"/>
+  <!-- Mid floodlights -->
+  <rect x="348" y="30" width="12" height="185" fill="#6a7a8a"/>
+  <rect x="322" y="20" width="64" height="16" fill="#ffe57a" rx="3"/>
+  <ellipse cx="354" cy="28" rx="45" ry="17" fill="#fff9c4" opacity="0.4"/>
+  <rect x="840" y="30" width="12" height="185" fill="#6a7a8a"/>
+  <rect x="814" y="20" width="64" height="16" fill="#ffe57a" rx="3"/>
+  <ellipse cx="846" cy="28" rx="45" ry="17" fill="#fff9c4" opacity="0.4"/>
+  <!-- Scoreboard -->
+  <rect x="510" y="175" width="180" height="38" fill="#0a1a30" stroke="#22c55e" stroke-width="2" rx="4"/>
+  <text x="600" y="192" font-family="monospace, Arial" font-size="11" fill="#22c55e" text-anchor="middle">TURFBOOK ARENA</text>
+  <text x="600" y="207" font-family="monospace, Arial" font-size="10" fill="#ffffff" text-anchor="middle">MATCH READY · FLOODLIT · PREMIUM TURF</text>
+  <!-- Tagline -->
+  <text x="600" y="90" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">BOOK PREMIUM FOOTBALL TURFS</text>
+  <text x="600" y="118" font-family="Arial, sans-serif" font-size="15" fill="#22c55e" text-anchor="middle">REAL-TIME AVAILABILITY · INSTANT BOOKING · ZERO CONFLICTS</text>
+</svg>

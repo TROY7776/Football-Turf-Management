@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <!-- Dusk sky - hillside setting -->
+  <rect width="800" height="450" fill="#0e1f10"/>
+  <!-- Hill silhouette -->
+  <ellipse cx="400" cy="130" rx="500" ry="90" fill="#0a1a0b"/>
+  <ellipse cx="150" cy="120" rx="200" ry="60" fill="#0c1f0d"/>
+  <ellipse cx="680" cy="125" rx="180" ry="55" fill="#0c1f0d"/>
+  <!-- Trees suggestion -->
+  <polygon points="50,180 65,140 80,180" fill="#0a1a0a"/>
+  <polygon points="720,180 735,138 750,180" fill="#0a1a0a"/>
+  <polygon points="740,180 758,130 776,180" fill="#0a1a0a"/>
+  <!-- Pitch -->
+  <rect x="0" y="200" width="800" height="250" fill="#1c7832"/>
+  <!-- Stripes - greener, scenic -->
+  <rect x="0" y="200" width="88" height="250" fill="#20893a"/>
+  <rect x="88" y="200" width="88" height="250" fill="#1c7832"/>
+  <rect x="176" y="200" width="88" height="250" fill="#20893a"/>
+  <rect x="264" y="200" width="88" height="250" fill="#1c7832"/>
+  <rect x="352" y="200" width="88" height="250" fill="#20893a"/>
+  <rect x="440" y="200" width="88" height="250" fill="#1c7832"/>
+  <rect x="528" y="200" width="88" height="250" fill="#20893a"/>
+  <rect x="616" y="200" width="88" height="250" fill="#1c7832"/>
+  <rect x="704" y="200" width="96" height="250" fill="#20893a"/>
+  <!-- Pitch perimeter fence -->
+  <line x1="30" y1="195" x2="770" y2="195" stroke="#a0a080" stroke-width="2.5" opacity="0.7"/>
+  <line x1="30" y1="195" x2="30" y2="445" stroke="#a0a080" stroke-width="2.5" opacity="0.7"/>
+  <line x1="770" y1="195" x2="770" y2="445" stroke="#a0a080" stroke-width="2.5" opacity="0.7"/>
+  <!-- Pitch markings -->
+  <rect x="45" y="210" width="710" height="225" fill="none" stroke="white" stroke-width="2.5"/>
+  <line x1="400" y1="210" x2="400" y2="435" stroke="white" stroke-width="2"/>
+  <circle cx="400" cy="322" r="62" fill="none" stroke="white" stroke-width="2"/>
+  <circle cx="400" cy="322" r="4" fill="white"/>
+  <rect x="45" y="258" width="135" height="110" fill="none" stroke="white" stroke-width="2"/>
+  <rect x="620" y="258" width="135" height="110" fill="none" stroke="white" stroke-width="2"/>
+  <!-- Goals -->
+  <rect x="27" y="285" width="6" height="58" fill="white"/>
+  <rect x="21" y="283" width="30" height="4" fill="white"/>
+  <rect x="767" y="285" width="6" height="58" fill="white"/>
+  <rect x="749" y="283" width="30" height="4" fill="white"/>
+  <!-- 2 Floodlights on posts -->
+  <rect x="200" y="25" width="10" height="175" fill="#8a9470"/>
+  <rect x="180" y="16" width="50" height="13" fill="#ffe066" rx="2"/>
+  <ellipse cx="205" cy="22" rx="35" ry="14" fill="#fff9c4" opacity="0.35"/>
+  <rect x="590" y="25" width="10" height="175" fill="#8a9470"/>
+  <rect x="570" y="16" width="50" height="13" fill="#ffe066" rx="2"/>
+  <ellipse cx="595" cy="22" rx="35" ry="14" fill="#fff9c4" opacity="0.35"/>
+  <!-- Refreshment lounge box -->
+  <rect x="330" y="195" width="140" height="20" fill="#14401e" stroke="#22c55e" stroke-width="1.5" rx="3"/>
+  <text x="400" y="208" font-family="Arial,sans-serif" font-size="10" fill="#22c55e" text-anchor="middle">REFRESHMENT LOUNGE</text>
+  <!-- Label -->
+  <text x="400" y="98" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="white" text-anchor="middle">GREEN VALLEY ARENA</text>
+  <text x="400" y="120" font-family="Arial, sans-serif" font-size="13" fill="#22c55e" text-anchor="middle">SCENIC HILLSIDE · MAPUSA · EVENING FIXTURES</text>
+</svg>

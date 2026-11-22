@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="grassGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1b4d2e" />
+      <stop offset="100%" stop-color="#0e2a18" />
+    </linearGradient>
+    <pattern id="stripes" width="80" height="500" patternUnits="userSpaceOnUse">
+      <rect width="40" height="500" fill="#205934" opacity="0.4" />
+      <rect x="40" width="40" height="500" fill="#184327" opacity="0.4" />
+    </pattern>
+  </defs>
+  <!-- Background Grass -->
+  <rect width="800" height="500" fill="url(#grassGrad)" />
+  <rect width="800" height="500" fill="url(#stripes)" />
+  <!-- Border & Perimeter -->
+  <rect x="50" y="40" width="700" height="420" fill="none" stroke="#ffffff" stroke-width="4" stroke-opacity="0.9" />
+  <!-- Center Line & Circle -->
+  <line x1="400" y1="40" x2="400" y2="460" stroke="#ffffff" stroke-width="4" stroke-opacity="0.9" />
+  <circle cx="400" cy="250" r="70" fill="none" stroke="#ffffff" stroke-width="4" stroke-opacity="0.9" />
+  <circle cx="400" cy="250" r="4" fill="#ffffff" />
+  <!-- Left Penalty Area & Goal -->
+  <rect x="50" y="140" width="120" height="220" fill="none" stroke="#ffffff" stroke-width="4" stroke-opacity="0.9" />
+  <rect x="50" y="190" width="50" height="120" fill="none" stroke="#ffffff" stroke-width="4" stroke-opacity="0.9" />
+  <circle cx="130" cy="250" r="3" fill="#ffffff" />
+  <!-- Right Penalty Area & Goal -->
+  <rect x="630" y="140" width="120" height="220" fill="none" stroke="#ffffff" stroke-width="4" stroke-opacity="0.9" />
+  <rect x="700" y="190" width="50" height="120" fill="none" stroke="#ffffff" stroke-width="4" stroke-opacity="0.9" />
+  <circle cx="670" cy="250" r="3" fill="#ffffff" />
+  <!-- Floodlight Glare -->
+  <circle cx="60" cy="50" r="120" fill="#ffffff" opacity="0.08" />
+  <circle cx="740" cy="50" r="120" fill="#ffffff" opacity="0.08" />
+  <!-- Badge Label -->
+  <rect x="70" y="60" width="220" height="34" rx="6" fill="#0f172a" fill-opacity="0.85" />
+  <text x="85" y="83" fill="#22c55e" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="14">⚽ CHAMPIONS ARENA</text>
+</svg>

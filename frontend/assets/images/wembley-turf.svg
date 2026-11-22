@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <!-- Sky - evening blue -->
+  <rect width="800" height="450" fill="#12203a"/>
+  <!-- Waterfront glow suggestion -->
+  <rect x="0" y="380" width="800" height="70" fill="#0a1628"/>
+  <ellipse cx="400" cy="390" rx="300" ry="20" fill="#1a3a6b" opacity="0.4"/>
+  <!-- Pitch -->
+  <rect x="0" y="190" width="800" height="250" fill="#155c28"/>
+  <!-- Stripes -->
+  <rect x="0" y="190" width="100" height="250" fill="#1a6e30"/>
+  <rect x="100" y="190" width="100" height="250" fill="#155c28"/>
+  <rect x="200" y="190" width="100" height="250" fill="#1a6e30"/>
+  <rect x="300" y="190" width="100" height="250" fill="#155c28"/>
+  <rect x="400" y="190" width="100" height="250" fill="#1a6e30"/>
+  <rect x="500" y="190" width="100" height="250" fill="#155c28"/>
+  <rect x="600" y="190" width="100" height="250" fill="#1a6e30"/>
+  <rect x="700" y="190" width="100" height="250" fill="#155c28"/>
+  <!-- Full pitch boundary -->
+  <rect x="30" y="200" width="740" height="220" fill="none" stroke="white" stroke-width="3"/>
+  <!-- Centre line -->
+  <line x1="400" y1="200" x2="400" y2="420" stroke="white" stroke-width="2.5"/>
+  <!-- Centre circle (larger - 7-a-side) -->
+  <circle cx="400" cy="310" r="70" fill="none" stroke="white" stroke-width="2"/>
+  <circle cx="400" cy="310" r="5" fill="white"/>
+  <!-- Penalty areas -->
+  <rect x="30" y="250" width="150" height="120" fill="none" stroke="white" stroke-width="2"/>
+  <rect x="620" y="250" width="150" height="120" fill="none" stroke="white" stroke-width="2"/>
+  <!-- Goals -->
+  <rect x="10" y="275" width="8" height="70" fill="white"/>
+  <rect x="4" y="273" width="35" height="5" fill="white"/>
+  <rect x="790" y="275" width="8" height="70" fill="white"/>
+  <rect x="763" y="273" width="35" height="5" fill="white"/>
+  <!-- 4 Floodlights (corners) -->
+  <rect x="60" y="30" width="10" height="160" fill="#8a9bb0"/>
+  <rect x="38" y="22" width="54" height="14" fill="#ffe066" rx="2"/>
+  <ellipse cx="65" cy="29" rx="38" ry="15" fill="#fffde0" opacity="0.25"/>
+  <rect x="730" y="30" width="10" height="160" fill="#8a9bb0"/>
+  <rect x="708" y="22" width="54" height="14" fill="#ffe066" rx="2"/>
+  <ellipse cx="735" cy="29" rx="38" ry="15" fill="#fffde0" opacity="0.25"/>
+  <!-- Stadium seating area -->
+  <rect x="0" y="130" width="800" height="62" fill="#18284a"/>
+  <line x1="0" y1="138" x2="800" y2="138" stroke="#243458" stroke-width="1.5"/>
+  <line x1="0" y1="150" x2="800" y2="150" stroke="#243458" stroke-width="1.5"/>
+  <line x1="0" y1="162" x2="800" y2="162" stroke="#243458" stroke-width="1.5"/>
+  <line x1="0" y1="174" x2="800" y2="174" stroke="#243458" stroke-width="1.5"/>
+  <!-- Label -->
+  <text x="400" y="92" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="white" text-anchor="middle">WEMBLEY TURF PARK</text>
+  <text x="400" y="114" font-family="Arial, sans-serif" font-size="13" fill="#22c55e" text-anchor="middle">PREMIUM 7-A-SIDE · PANAJI WATERFRONT</text>
+</svg>

@@ -45,7 +45,7 @@ function renderTurfs(list) {
 
   container.innerHTML = list.map(turf => `
     <div class="turf-card">
-      <img src="${turf.image_url || '/assets/turf-champions.jpg'}" alt="${turf.turf_name}" class="turf-card-image" onerror="this.src='/assets/turf-champions.jpg'" />
+      <img src="${turf.image_url || '/assets/images/champions-arena.svg'}" alt="${turf.turf_name}" class="turf-card-image" onerror="this.src='/assets/images/champions-arena.svg'" />
       <div class="turf-card-body">
         <h3 class="turf-card-title">${turf.turf_name}</h3>
         <div class="turf-card-location">📍 ${turf.location}</div>
@@ -81,7 +81,7 @@ function openTurfModal(turfId) {
   if (!turf) return;
 
   document.getElementById('modal-turf-name').textContent = turf.turf_name;
-  document.getElementById('modal-turf-image').src = turf.image_url || '/assets/turf-champions.jpg';
+  document.getElementById('modal-turf-image').src = turf.image_url || '/assets/images/champions-arena.svg';
   document.getElementById('modal-turf-location').textContent = turf.location;
   document.getElementById('modal-turf-price').textContent = `${formatCurrency(turf.price)} per hour`;
   document.getElementById('modal-turf-desc').textContent = turf.description || 'Full-sized synthetic turf engineered for football performance.';

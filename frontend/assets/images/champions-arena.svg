@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <!-- Sky background -->
+  <rect width="800" height="450" fill="#0a1628"/>
+  <!-- Stadium lights glow -->
+  <ellipse cx="120" cy="80" rx="80" ry="40" fill="#fffbe6" opacity="0.12"/>
+  <ellipse cx="680" cy="80" rx="80" ry="40" fill="#fffbe6" opacity="0.12"/>
+  <!-- Pitch base - green -->
+  <rect x="0" y="200" width="800" height="250" fill="#1a6b2e"/>
+  <!-- Pitch alternate green stripes -->
+  <rect x="0" y="200" width="80" height="250" fill="#1e7d35"/>
+  <rect x="80" y="200" width="80" height="250" fill="#1a6b2e"/>
+  <rect x="160" y="200" width="80" height="250" fill="#1e7d35"/>
+  <rect x="240" y="200" width="80" height="250" fill="#1a6b2e"/>
+  <rect x="320" y="200" width="80" height="250" fill="#1e7d35"/>
+  <rect x="400" y="200" width="80" height="250" fill="#1a6b2e"/>
+  <rect x="480" y="200" width="80" height="250" fill="#1e7d35"/>
+  <rect x="560" y="200" width="80" height="250" fill="#1a6b2e"/>
+  <rect x="640" y="200" width="80" height="250" fill="#1e7d35"/>
+  <rect x="720" y="200" width="80" height="250" fill="#1a6b2e"/>
+  <!-- Pitch boundary -->
+  <rect x="40" y="210" width="720" height="230" fill="none" stroke="white" stroke-width="3"/>
+  <!-- Centre line -->
+  <line x1="400" y1="210" x2="400" y2="440" stroke="white" stroke-width="2"/>
+  <!-- Centre circle -->
+  <circle cx="400" cy="325" r="60" fill="none" stroke="white" stroke-width="2"/>
+  <circle cx="400" cy="325" r="4" fill="white"/>
+  <!-- Left penalty box -->
+  <rect x="40" y="260" width="130" height="130" fill="none" stroke="white" stroke-width="2"/>
+  <!-- Right penalty box -->
+  <rect x="630" y="260" width="130" height="130" fill="none" stroke="white" stroke-width="2"/>
+  <!-- Left goal box -->
+  <rect x="40" y="295" width="55" height="60" fill="none" stroke="white" stroke-width="2"/>
+  <!-- Right goal box -->
+  <rect x="705" y="295" width="55" height="60" fill="none" stroke="white" stroke-width="2"/>
+  <!-- Left goalpost -->
+  <rect x="20" y="300" width="5" height="50" fill="white"/>
+  <rect x="15" y="298" width="30" height="4" fill="white"/>
+  <!-- Right goalpost -->
+  <rect x="775" y="300" width="5" height="50" fill="white"/>
+  <rect x="755" y="298" width="30" height="4" fill="white"/>
+  <!-- Floodlight left -->
+  <rect x="100" y="40" width="12" height="150" fill="#b0b8c1"/>
+  <rect x="80" y="35" width="52" height="14" fill="#ffe066" rx="3"/>
+  <ellipse cx="106" cy="42" rx="40" ry="18" fill="#fff9c4" opacity="0.3"/>
+  <!-- Floodlight right -->
+  <rect x="688" y="40" width="12" height="150" fill="#b0b8c1"/>
+  <rect x="668" y="35" width="52" height="14" fill="#ffe066" rx="3"/>
+  <ellipse cx="694" cy="42" rx="40" ry="18" fill="#fff9c4" opacity="0.3"/>
+  <!-- Stadium stands suggestion -->
+  <rect x="0" y="140" width="800" height="60" fill="#1a2740" opacity="0.9"/>
+  <rect x="0" y="130" width="800" height="15" fill="#243450"/>
+  <!-- Stand rows -->
+  <line x1="0" y1="145" x2="800" y2="145" stroke="#2d4060" stroke-width="1"/>
+  <line x1="0" y1="155" x2="800" y2="155" stroke="#2d4060" stroke-width="1"/>
+  <line x1="0" y1="165" x2="800" y2="165" stroke="#2d4060" stroke-width="1"/>
+  <line x1="0" y1="175" x2="800" y2="175" stroke="#2d4060" stroke-width="1"/>
+  <line x1="0" y1="185" x2="800" y2="185" stroke="#2d4060" stroke-width="1"/>
+  <!-- Label -->
+  <text x="400" y="100" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="white" text-anchor="middle">CHAMPIONS ARENA</text>
+  <text x="400" y="122" font-family="Arial, sans-serif" font-size="13" fill="#22c55e" text-anchor="middle">FIFA APPROVED · LED FLOODLIGHTS · 5-A-SIDE</text>
+</svg>
