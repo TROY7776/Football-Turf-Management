@@ -10,9 +10,9 @@ Built with **HTML5, CSS3, Vanilla JavaScript (ES6+), Node.js, Express.js, and SQ
 
 | Sr. No | Roll No | Name of Student | Academic Year |
 |---|---|---|---|
-| 1 | **24CE126** | **Gavril Anthony Barreto** | Second Year B.E. (Computer Engineering) |
-| 2 | **24CE128** | **Jayden Ansall Fernandes** | Second Year B.E. (Computer Engineering) |
-| 3 | **24CE125** | **Gavin Troy Fernandes** | Second Year B.E. (Computer Engineering) |
+| 1 | **24CE126** | **Gavril Anthony Barreto** | Third Year T.E. (Computer Engineering) |
+| 2 | **24CE128** | **Jayden Ansall Fernandes** | Third Year T.E. (Computer Engineering) |
+| 3 | **24CE125** | **Gavin Troy Fernandes** | Third Year T.E. (Computer Engineering) |
 
 ---
 
